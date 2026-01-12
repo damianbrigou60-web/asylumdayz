@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Battlepass Admin Login</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<section class="admin-login">
+  <h1>Battlepass Admin</h1>
+  <input type="password" id="admin-password" placeholder="Enter password">
+  <button class="btn info" id="login-btn">Login</button>
+  <p id="login-msg" style="color:red; margin-top:10px;"></p>
+</section>
+
+<script>
+const correctPassword = "mypassword"; // change this
+const loginBtn = document.getElementById("login-btn");
+const loginMsg = document.getElementById("login-msg");
+
+loginBtn.addEventListener("click", ()=>{
+  const pw = document.getElementById("admin-password").value;
+  if(pw===correctPassword){
+    localStorage.setItem("adminLoggedIn","true");
+    window.location.href="battlepass-admin.html";
+  } else {
+    loginMsg.textContent="Incorrect password!";
+  }
+});
+
+if(localStorage.getItem("adminLoggedIn")==="true"){
+  window.location.href="battlepass-admin.html";
+}
+</script>
+
+</body>
+</html>

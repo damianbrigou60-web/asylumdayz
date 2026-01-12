@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Donate | Asylum DayZ</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background:
+        linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95)),
+        url("site bg.jpeg") no-repeat center center fixed;
+      background-size: cover;
+      color: #e5e5e5;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .donate-container {
+      max-width: 600px;
+      margin: 100px auto 50px auto;
+      padding: 30px;
+      background: rgba(18,0,0,0.85);
+      border: 2px solid #700;
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #ff4444;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 5px #000;
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 5px 0;
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 80%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 2px solid #700;
+      background: #120000;
+      color: #fff;
+      margin-bottom: 15px;
+    }
+
+    #rewards-display {
+      margin: 15px 0;
+      font-size: 14px;
+      color: #ff6666;
+    }
+
+    .btn-donate {
+      display: inline-block;
+      margin: 10px;
+      padding: 14px 32px;
+      font-size: 16px;
+      border: 2px solid #700;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #900;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+      transition: 0.3s;
+    }
+
+    .btn-donate:hover {
+      background: #b00;
+      border-color: #900;
+    }
+
+    /* Premium subscription section */
+    .premium-section {
+      margin-top: 50px;
+      padding: 20px;
+      background: rgba(20,0,0,0.9);
+      border: 2px solid #900;
+      border-radius: 12px;
+    }
+
+    .btn-premium {
+      display: inline-block;
+      padding: 14px 40px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #fff;
+      background: linear-gradient(45deg, #ff0000, #ff4444, #900);
+      border: 2px solid #700;
+      border-radius: 10px;
+      cursor: pointer;
+      text-transform: uppercase;
+      animation: blood-drip 2s infinite;
+      text-decoration: none;
+    }
+
+    @keyframes blood-drip {
+      0% { box-shadow: 0 0 10px #900; transform: translateY(0); }
+      25% { box-shadow: 0 0 15px #f00; transform: translateY(-2px); }
+      50% { box-shadow: 0 0 20px #900; transform: translateY(0); }
+      75% { box-shadow: 0 0 15px #f00; transform: translateY(2px); }
+      100% { box-shadow: 0 0 10px #900; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<header class="navbar">
+  <div class="nav-logo">
+    <img src="Asylum Image (logo).jpeg" alt="Asylum Logo">
+  </div>
+  <nav class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="servers.html">Servers</a>
+    <a href="battlepass.html">Battlepass</a>
+    <a href="donate.html" class="active">Donate</a>
+  </nav>
+</header>
+
+<section class="donate-container">
+  <h1>Support Asylum DayZ</h1>
+  <p>Choose your donation amount and see your rewards!</p>
+
+  <label for="donate-amount">Donation Amount ($)</label>
+  <input type="number" id="donate-amount" placeholder="5" min="1">
+
+  <label for="donate-method">Payment Method</label>
+  <select id="donate-method">
+    <option value="paypal">PayPal</option>
+    <option value="card">Credit Card</option>
+    <option value="cashapp">CashApp</option>
+  </select>
+
+  <div id="rewards-display"></div>
+
+  <!-- Standard Donate Button -->
+  <button id="donate-button" class="btn-donate">Donate</button>
+
+  <!-- Premium Subscription Section -->
+  <div class="premium-section">
+    <h2>Premium Subscription</h2>
+    <p>Unlock exclusive perks, VIP features, and priority support with a 30-day premium subscription.</p>
+    <a href="premium.html" class="btn-premium">Buy Premium</a>
+  </div>
+</section>
+
+<script>
+const rewards = [
+  { min: 5, max: 9, text: "Free in-game item!" },
+  { min: 10, max: 24, text: "Premium in-game item + VIP tag!" },
+  { min: 25, max: 1000, text: "All rewards + special perks!" }
+];
+
+const amountInput = document.getElementById("donate-amount");
+const rewardsDisplay = document.getElementById("rewards-display");
+const donateBtn = document.getElementById("donate-button");
+
+amountInput.addEventListener("input", updateRewards);
+
+function updateRewards() {
+  const val = parseInt(amountInput.value);
+  if (!val || val < 1) {
+    rewardsDisplay.innerText = "";
+    return;
+  }
+  const reward = rewards.find(r => val >= r.min && val <= r.max);
+  rewardsDisplay.innerText = `Rewards: ${reward ? reward.text : "Special reward!"}`;
+}
+
+donateBtn.addEventListener("click", () => {
+  const amount = amountInput.value;
+  const method = document.getElementById("donate-method").value;
+  if (!amount || amount < 1) {
+    alert("Enter a valid donation amount.");
+    return;
+  }
+
+  let link = "";
+  if (method === "paypal") link = `https://www.paypal.com/paypalme/paypal.me/DamianBrigou/${amount}`;
+  if (method === "card") link = `https://yourstripecheckout.com?amount=${amount}`;
+  if (method === "cashapp") link = `https://cash.app/$YourUsername/${amount}`;
+
+  window.open(link, "_blank");
+});
+</script>
+
+</body>
+</html>
